@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+    <form ng-app="app" ng-controller="ctrl" class="main">
+        <h1>To Do List</h1>
+        <div>
+            <input type="text" class="message" placeholder="What are you doing today?" ng-model="message.text" ng-keydown="messageKeyDown($event)" />
+        </div>
+        <div class="list">
+            <ul>
+                <li ng-repeat="todoitem in todolist|filter:filterData track by $index" ng-mouseover="todolistMouseover(todoitem)" ng-mouseout="todolistMouseout(todoitem)">
+                    <input  type="checkbox" class="checkbox" ng-model="todoitem.status" ng-click="checkboxClick(todoitem)" />
+                    <span span-focus span-index="{{$index}}" ng-show="todoitem.show" ng-bind="$index+1+'.'+todoitem.text" ng-class="{'select':todoitem.status}"  ng-click="todolistClick(todoitem)"></span>
+                    <input input-focus data-index="{{$index}}" class="hide_input" type="text" ng-show="!todoitem.show" ng-model="todoitem.text" />
+                </li>
+            </ul>
+        </div>
+        <div class="ft">
+            <div class="ft_checkall" ng-class="{'hover':checkAllShow}">
+                <label ng-click="checkAll()"><input type="checkbox" ng-model="checkall">全选/全不选</label>
+            </div>
+            <div class="ft_unfinnum">Unfinfished:<span ng-bind="unfinNum"></span></div>
+            <div class="ft_clear" ng-class="{'clearflag':clearflag}" ng-mousedown="clearMousedown()" ng-mouseup="clearMouseup()"><a>Clear</a></div>
+            <ul>
+                <li ng-class="{'boldflag':boldflag==1}" ng-click="all()"><a>all</a></li>
+                <li ng-class="{'boldflag':boldflag==2}" ng-click="completed()"><a>completed</a></li>
+                <li ng-class="{'boldflag':boldflag==3}" ng-click="incompleted()"><a >incompleted</a></li>
+            </ul>
+        </div>
+    </form>
+</body>
+<script src="javascripts/angular.min.js"></script>
+<script src="javascripts/app.js"></script>
+<script src="javascripts/ctrl.js"></script>
+</html>

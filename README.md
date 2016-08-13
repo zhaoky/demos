@@ -1,2 +1,2 @@
 # someDemo
-一些日常demo
+日常一些小demo，随时更新~
