@@ -1,2 +1,2 @@
-# someDemo
-日常一些小demo，随时更新~
+## demos
+### 日常一些demo，随时更新~
