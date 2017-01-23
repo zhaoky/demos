@@ -1,0 +1,138 @@
+<!-- 
+	absolate方式实现瀑布流
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>absolate方式实现瀑布流</title>
+</head>
+<style>
+	.container{
+		margin:10px auto;
+		position: relative;
+	}
+	.container .cell{
+		position: absolute;
+		border:solid 1px red;
+		opacity: 0;
+		transition: all .3s;
+	}
+	.container .cell img{
+		width:100%;
+	}
+</style>
+<body>
+	<div class="container"></div>
+</body>
+<script>
+	var imgDataList = [
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68268886728.jpg', title:'0'},
+							{imgUrl:'http://img.juimg.com/tuku/yulantu/130904/328512-130Z41J34638.jpg', title:'1'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68194794777.jpg', title:'2'},
+							{imgUrl:'http://pic.qiantucdn.com/58pic/16/71/62/22p58PICwub_1024.jpg', title:'3'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68279879485.jpg', title:'4'},
+							{imgUrl:'http://img.juimg.com/tuku/yulantu/130904/328512-130Z41KF652.jpg', title:'5'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/229288441.jpg', title:'ver1'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/229222065.jpg', title:'ver2'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/22900017.jpg', title:'ver3'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/22988569.jpg', title:'ver4'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/229155441.jpg', title:'ver5'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68279658934.jpg', title:'6'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68268574237.jpg', title:'7'},
+							{imgUrl:'http://img05.tooopen.com/images/20140621/sy_63747293547.jpg', title:'8'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68268788134.jpg', title:'9'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424161_01000.jpg', title:'hor1'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424363_01000.jpg', title:'hor2'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424163_01000.jpg', title:'hor3'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424282_01000.jpg', title:'hor4'},
+							{imgUrl:'', title:'hor5'}
+							
+		];
+
+	console.log(imgDataList);
+
+
+	//配置项
+	var config = {
+		cellWidth : 200,  //数据块宽度
+		gapWidth: 10,		//数据块间距（宽）
+		gapHeight: 10		//数据块间距（高）
+	};
+
+	var w = document.documentElement.offsetWidth;  
+	var container = document.querySelector(".container");
+	var cellWidth = config.cellWidth+config.gapWidth; //一个包含间距数据块的宽度
+	var colNum = Math.floor(w/cellWidth);  //列数
+	container.style.width = cellWidth*colNum - config.gapWidth + "px"; //container居中
+
+	//初始化每一列高度，记录到oArr中
+	var hArr = [];  
+	for(var i = 0;i<colNum; i++){
+		hArr.push(0);
+	}
+		
+
+	//并发加载所有图片
+	imgDataList.forEach(function (item) {
+		loadImage(item.imgUrl, item.title);
+	});
+
+	function loadImage(url, title) {
+		var img = new Image();
+		img.title = title;
+		img.src = url;
+		if (img.complete) {
+			console.log("complete：" + img.title);
+			insert(img);
+			return;
+		}
+		img.onload = function () {
+			img.onload = null;
+			console.log("onload：" + img.title + " "+img.complete);
+			//加载完毕才插入
+			insert(img);
+		};
+		img.onerror = function () {
+			console.log("error：" + img.title + " "+  img.complete);
+		}
+	}
+
+
+	function insert(img){
+
+		//创建cell
+		var div = document.createElement("div");
+		div.className = "cell";
+		div.style.width = config.cellWidth+ "px";	
+		div.appendChild(img);	
+		container.appendChild(div);
+
+		var x = _getMinKey(hArr);  //获得最短的一列索引值
+
+		div.style.top = hArr[x] + config.gapHeight + "px";
+		div.style.left = cellWidth*x + "px";
+
+		hArr[x] = hArr[x] + div.offsetHeight + config.gapHeight;   //更新高度
+
+		setTimeout(function () {
+			div.style.opacity = 1;
+		}, 10);
+
+	}
+	
+	//获取数字数组最小值的索引
+	function _getMinKey(arr) {
+		var a = arr[0];
+		var b = 0;
+		for (var k in arr) {
+			if (arr[k] < a) {
+				a = arr[k];
+				b = k;
+			}
+		}
+		return b;
+	}
+	
+</script>
+</html>

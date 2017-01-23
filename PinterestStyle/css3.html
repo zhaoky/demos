@@ -1,0 +1,112 @@
+<!-- 
+	column:纵向排列,适合内容性的模块
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>column多栏布局实现瀑布流</title>
+</head>
+<style>
+	.container{
+		width: 80%;
+		margin: 0 auto;
+	}
+	.container .waterfall{
+		/*划分的列数*/
+		-moz-column-count: 3; 
+		-webkit-column-count: 3; 
+		column-count: 3;
+		/*列的宽度*/
+/*		-moz-column-width: 100px; 
+		-webkit-column-width: 100px; 
+		column-width: 100px; */
+		/*列之间的间隔*/
+		-moz-column-gap: 10px; 
+		-webkit-column-gap: 10px; 
+		column-gap: 10px;
+	}
+	.container .waterfall .cell{
+	    padding: 2%;
+	    margin: 10px 0;
+	    opacity: 0;
+	    transition: all .3s;
+	    border: 1px solid red;
+	}
+	.container .waterfall .cell img{
+		width:100%;
+	}
+</style>
+<body>
+	<div class="container">
+		<div class="waterfall">
+		</div>
+	</div>
+</body>
+<script>
+	var imgDataList = [
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68268886728.jpg', title:'0'},
+							{imgUrl:'http://img.juimg.com/tuku/yulantu/130904/328512-130Z41J34638.jpg', title:'1'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68194794777.jpg', title:'2'},
+							{imgUrl:'http://pic.qiantucdn.com/58pic/16/71/62/22p58PICwub_1024.jpg', title:'3'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68279879485.jpg', title:'4'},
+							{imgUrl:'http://img.juimg.com/tuku/yulantu/130904/328512-130Z41KF652.jpg', title:'5'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68279658934.jpg', title:'6'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68268574237.jpg', title:'7'},
+							{imgUrl:'http://img05.tooopen.com/images/20140621/sy_63747293547.jpg', title:'8'},
+							{imgUrl:'http://img05.tooopen.com/images/20140805/sy_68268788134.jpg', title:'9'},
+
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424161_01000.jpg', title:'hor1'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424363_01000.jpg', title:'hor2'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424163_01000.jpg', title:'hor3'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424282_01000.jpg', title:'hor4'},
+							{imgUrl:'http://k.zol-img.com.cn/dcbbs/23425/a23424154_0100000.jpg', title:'hor5'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/229288441.jpg', title:'ver1'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/229222065.jpg', title:'ver2'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/22900017.jpg', title:'ver3'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/22988569.jpg', title:'ver4'},
+							{imgUrl:'http://file-sheying.sioe.cn/201202/9/229155441.jpg', title:'ver5'}
+		];
+
+	console.log(imgDataList);
+
+	//并发加载所有图片
+	imgDataList.forEach(function (item) {
+		loadImage(item.imgUrl, item.title);
+	});
+
+	function loadImage(url, title) {
+		var img = new Image();
+		img.title = title;
+		img.src = url;
+
+		if (img.complete) {
+			console.log("complete：" + img.title);
+			insert(img);
+			return;
+		}
+		img.onload = function () {
+			img.onload = null;
+			console.log("onload：" + img.title);
+			//加载完毕才插入
+			insert(img);
+		};
+		img.onerror = function () {
+			console.log("error：" + img.title);
+		}
+	}
+
+	//插入
+	function insert(img) {
+
+		var div = document.createElement("div");
+		var waterfall = document.querySelector(".waterfall");
+		div.className = "cell";
+		div.appendChild(img);
+		waterfall.appendChild(div);
+		setTimeout(function () {
+			div.style.opacity = 1;
+		}, 10);
+	}
+</script>
+</html>
