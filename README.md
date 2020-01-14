@@ -1,2 +1,13 @@
-## demos
-### 日常一些demo，随时更新~
+# demos
+
+记录一些学习的零碎的知识点的 `demo`。
+
+每一个文件夹即为一个 `demo`，`cd` 到每个具体的文件夹即可。
+
+## demo 列表（按入库顺序）
+
+- `angular-module-demo` angular1.x 模块依赖 demo
+- `angular-todolist` angular1.x 所开发的单页面应用
+- `browserify` browserify demo
+- `observer-pattern` 一个简单的发布订阅模式 demo
+- `pinterest-style` 3 种瀑布流布局 demo
