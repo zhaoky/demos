@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+
+</head>
+
+<body>
+    <ul id="app">
+        <li v-for="(item,index) in list" @click="event(item.id)" :key="index">
+            {{ item.name }}{{item.age}}
+        </li>
+        <div @click="event1">dian</div>
+    </ul>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                list: []
+            },
+            created() {
+                this.list = [{
+                    name: 'a',
+                    age: '20',
+                    id: 1
+                }, {
+                    name: 'b',
+                    age: '21',
+                    id: 2
+                }, {
+                    name: 'c',
+                    age: '22',
+                    id: 3
+                }, {
+                    name: 'd',
+                    age: '23',
+                    id: 4
+                }, {
+                    name: 'e',
+                    age: '24',
+                    id: 5
+                }];
+            },
+            methods: {
+                event: function (i) {
+                    console.log(i);
+                },
+                event1: function () {
+                    this.list = [{
+                        name: 'b',
+                        age: '20',
+                        id: 2
+                    }, {
+                        name: 'a',
+                        age: '21',
+                        id: 1
+                    }, {
+                        name: 'c',
+                        age: '22',
+                        id: 3
+                    }, {
+                        name: 'd',
+                        age: '23',
+                        id: 4
+                    }, {
+                        name: 'e',
+                        age: '24',
+                        id: 5
+                    }]
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

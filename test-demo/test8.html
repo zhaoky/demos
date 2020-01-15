@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="container">
+        <h1 k-text="title"></h1>
+        <ul>
+            <li k-for="item in nameList">
+                <span k-text="item.name"></span>
+                <span k-show="item.show">age:{{item.age}}</span>
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    class Korey {
+        constructor(el, data) {
+            this.$data = data;
+            this.$el = document.querySelector(el);
+            this.$frag = this.nodeToFrag(this.$el);
+            this.$frag1 = this.node2Fragment(this.$el);
+            console.log(1,this.$frag,this.$frag1);
+            this.scan(this.$frag);
+        }
+        nodeToFrag(el) {
+            const frag = document.createDocumentFragment();
+            frag.innerHTML = el.innerHTML;
+            return frag;
+        }
+        node2Fragment(el) {
+                const fragment = document.createDocumentFragment()
+                let child = el.firstChild
+                while (child) {
+                    fragment.appendChild(child)
+                    child = el.firstChild
+                }
+                return fragment
+            }
+    }
+    let data = {
+        title: '标题哦',
+        nameList: [{
+            name: 'zky',
+            age: '27',
+            show: true
+        }, {
+            name: 'qxq',
+            age: '25',
+            show: false
+        }]
+    };
+
+    new Korey('#container', data);
+    data.title = '标题2';
+</script>
+
+</html>

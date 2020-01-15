@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #a {
+        width: 100px;
+        height: 100px;
+        background: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div id="a">
+      a -->
+    <a id="b" href="https://www.baidu.com">b</a>
+    <!-- </div> -->
+  </body>
+  <script>
+    var b = document.getElementById('b');
+    var a = document.getElementById('a');
+    // b.addEventListener(
+    //   'touchstart',
+    //   function(e) {
+    //     console.log('666bbb', e);
+    //     e.preventDefault();
+    //   },
+    //   {
+    //     passive: true
+    //   }
+    // );
+    // a.addEventListener(
+    //   'touchstart',
+    //   function(e) {
+    //     console.log('666aaa', e);
+    //     e.preventDefault();
+    //   },
+    //   {
+    //     passive: true
+    //   }
+    // );
+    b.addEventListener(
+      'click',
+      function(e) {
+        e.preventDefault();
+        console.log('666bbbb', e);
+      },
+      {
+        passive: true
+      }
+    );
+  </script>
+</html>

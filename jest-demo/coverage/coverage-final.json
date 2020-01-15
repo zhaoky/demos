@@ -1,0 +1,2 @@
+{"/nice/jest-demo/src/index.ts": {"path":"/nice/jest-demo/src/index.ts","statementMap":{"0":{"start":{"line":2,"column":2},"end":{"line":2,"column":15}}},"fnMap":{"0":{"name":"a","decl":{"start":{"line":1,"column":24},"end":{"line":1,"column":25}},"loc":{"start":{"line":1,"column":47},"end":{"line":3,"column":1}},"line":1}},"branchMap":{},"s":{"0":1},"f":{"0":1},"b":{},"_coverageSchema":"43e27e138ebf9cfc5966b082cf9a028302ed4184","hash":"68a732583aded7bddb7b2c4bc798a90da06ccb05"}
+}

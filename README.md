@@ -11,3 +11,13 @@
 - `browserify` browserify demo
 - `observer-pattern` 一个简单的发布订阅模式 demo
 - `pinterest-style` 3 种瀑布流布局 demo
+- `ast-demo` ast demo
+- `babel-demo` babel demo
+- `jest-demo` jest demo
+- `node-demo` node demo
+- `postcss-demo` postcss demo
+- `promise-demo` promise demo
+- `process-demo` process demo
+- `test-demo` 一些零碎的知识点测试
+- `ts-demo` typescript demo
+- `yargs-demo` yargs demo

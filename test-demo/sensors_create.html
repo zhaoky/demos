@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建神策事件</title>
+    <style>
+        .red {
+            color: red;
+        }
+
+        #button {
+            margin-left: 20px;
+        }
+
+        li {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h2>重要说明：</h2>
+        <ul>
+            <li>此页面用于创建聚美线上（神策默认项目）埋点事件(test项目无须创建)。</li>
+            <li>所有小程序的体验版和正式版都是默认项目，其他都是test项目。</li>
+            <li>新增事件，或者新增已有事件的未有属性，都需要在本页面创建。</li>
+            <li>如果创建后，正确查询依旧不能查到对应数据，考虑是数据污染。</li>
+            <li>新增事件的属性的属性值一律为字符串！</li>
+            <li>请不要将本页面外泄和做测试用！！！</li>
+        </ul>
+        <div>
+            <div>输入事件名称：
+                <input type="text" id="name">
+            </div>
+            <div>输入事件属性（多个属性用英文逗号隔开）：
+                <input type="text" id="property">
+                <button id="button">创建</button>
+            </div>
+            <div id="show"></div>
+        </div>
+    </div>
+    <script>
+        (function (para) {
+            var p = para.sdk_url, n = para.name, w = window, d = document, s = 'script', x = null, y = null;
+            w['sensorsDataAnalytic201505'] = n;
+            w[n] = w[n] || function (a) { return function () { (w[n]._q = w[n]._q || []).push([a, arguments]); } };
+            var ifs = ['track', 'quick', 'register', 'registerPage', 'registerOnce', 'trackSignup', 'trackAbtest', 'setProfile', 'setOnceProfile', 'appendProfile', 'incrementProfile', 'deleteProfile', 'unsetProfile', 'identify', 'login', 'logout', 'trackLink', 'clearAllRegister', 'getAppStatus'];
+            for (var i = 0; i < ifs.length; i++) {
+                w[n][ifs[i]] = w[n].call(null, ifs[i]);
+            }
+            if (!w[n]._t) {
+                x = d.createElement(s), y = d.getElementsByTagName(s)[0];
+                x.async = 1;
+                x.src = p;
+                x.setAttribute('charset', 'UTF-8');
+                y.parentNode.insertBefore(x, y);
+                w[n].para = para;
+            }
+        })({
+            sdk_url: 'http://static.sensorsdata.cn/sdk/1.10.9/sensorsdata.min.js',
+            heatmap_url: 'http://static.sensorsdata.cn/sdk/1.10.9/heatmap.min.js',
+            name: 'sa',
+            server_url: 'http://sd.int.jumei.com:8106/sa?token=2cacac13cac5f99f584007495653b465'
+        });
+        var $ = document.getElementById.bind(document);
+        $('button').onclick = function () {
+            var eventName = $('name').value;
+            if (!eventName) { alert('事件名不能为空！'); return; }
+            var eventProp = $('property').value;
+            var propList = eventProp.indexOf(',') === -1 ? [eventProp] : eventProp.split(',');
+            propList = propList.filter(function (val) { return !(!val || val === "") });
+            var propText = propList.length === 1 ? '<div class="red">' + propList[0] + '</div>' : propList.reduce(function (p, n) { return p + '<div class="red">' + n + '</div>' }, '');
+            $('show').innerHTML = '<div>你输入的事件名为：<div class="red">' + eventName + '</div>输入的属性有:' + propText + '<div><button id="button2">确认创建</button></div></div>';
+            var params = {};
+            propList.map(function (item) {
+                params[item] = '';
+            });
+            $('button2').onclick = function () {
+                sa.track(eventName, params);
+                alert('创建成功！');
+                document.getElementById('show').innerHTML = $('name').value = $('property').value = '';
+            }
+        }
+    </script>
+</body>
+
+</html>

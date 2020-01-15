@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>data binding test</title>
+</head>
+<body>
+ 
+    <div id="binding">
+        <p>{{name}}</p>
+        {{sex}}
+        <br>
+        {{haha}}
+        <button upon-click="fun">{{buttonName}}</button>
+    </div>
+ 
+    <script type="text/javascript">
+ 
+ 
+        function dataBinding(obj) {
+            this._el = obj.id || ''; 
+            this._ready = obj.ready || function(){};
+            this._data = obj.data || {};
+            this._methods = obj.methods || {};
+ 
+            this.dom = {};
+            this.init = {};
+ 
+            this.dom._context = document.getElementById(this._el);
+ 
+            var variable = this.getVariable();
+            this.renderStart(variable);
+ 
+            this.analyseMethods();
+ 
+            return this;
+        }
+ 
+        dataBinding.prototype.renderStart = function(variable) {
+            this.digestVariable(variable);
+        };
+ 
+        dataBinding.prototype.getVariable = function() {
+            this.dom.innerHTML = this.dom._context.innerHTML;
+            var re = /\{\{.*\}\}/g;
+            var result = this.dom.innerHTML.match(re);
+            for (var i = result.length - 1; i >= 0; i--) {
+                result[i] = result[i].replace('{{', '');
+                result[i] = result[i].replace('}}', '');
+            };
+            return result;
+        };
+ 
+        dataBinding.prototype.renderDOM = function(DOMRendered) {
+            this.dom._context.innerHTML = DOMRendered;
+        };
+ 
+        dataBinding.prototype.makeDOM = function(dom, isChange) {
+ 
+            isChange = isChange || false;
+ 
+            this.dom.newerInnerHTML = '';
+ 
+            for (var i = 0; i < this.dom.innerHTML.length; i++) {
+                this.dom.newerInnerHTML += this.dom.innerHTML[i];                   
+            };
+ 
+            for (var i = 0; i < dom.length; i++) {
+ 
+                if(!dom[i]) {
+                    continue;
+                }
+ 
+                var key = dom[i].key;
+                var val = dom[i].val;
+ 
+                this.dom.newerInnerHTML = this.dom.newerInnerHTML.replace('{{' + key + '}}', val);
+            };
+ 
+            this.renderDOM(this.dom.newerInnerHTML);
+            if(!isChange) {
+                this._ready();              
+            }
+ 
+        };
+ 
+        dataBinding.prototype.digestVariable = function(variable) {
+ 
+            var validVariable = [];
+            var dom = [];
+ 
+            for (var i = 0; i < variable.length; i++) {
+                var currentVar = variable[i];
+                var flag = false;
+                var val = '';
+                for(var key in this._data) {
+                    if(currentVar == key) {
+                        flag = true;
+                        val = this._data[currentVar];
+                    }
+                }
+                if(!flag) {
+                    throw 'variable ' + currentVar + ' is undefined';
+                }else {
+                    dom.push({
+                        key: currentVar,
+                        val: val
+                    });
+ 
+                    this[currentVar] = val;
+                    this.watch(currentVar);
+                }
+            };
+ 
+            this.init.dom = dom;
+            this.makeDOM(dom);
+ 
+            return validVariable;
+ 
+        };
+ 
+        dataBinding.prototype.watch = function(key) {
+ 
+            var self = this;
+ 
+            Object.defineProperty(self, key, {
+                set: function(x, y) {
+ 
+                    var dataIndex = this.findIndexOfData({
+                        key: key,
+                        val: x
+                    })
+ 
+                    if(dataIndex != -1) {
+ 
+                        delete this.init.dom[dataIndex];
+ 
+                        this.init.dom.push({
+                            key: key,
+                            val: x
+                        });
+ 
+                        self.makeDOM(this.init.dom, true);
+                    }
+ 
+                }
+            });
+ 
+        };
+ 
+        dataBinding.prototype.findIndexOfData = function(data) {
+ 
+            for (var i = 0; i < this.init.dom.length; i++) {
+                var currentData = this.init.dom[i];
+                if(!currentData) {
+                    continue;
+                }
+                if(data.key == currentData.key) {
+                    return i; 
+                }
+            };
+ 
+            return -1;
+ 
+        };
+ 
+        dataBinding.prototype.analyseMethods = function() {
+ 
+            var cxt = this.dom._context;
+ 
+            this.getAllEvts();
+ 
+            var nodeList = cxt.children;
+ 
+            for (var i = 0; i < nodeList.length; i++) {
+                var childNode = nodeList[i];
+ 
+                var attrs = childNode.attributes;
+                attrs = Array.prototype.slice.call(attrs);
+ 
+                for (var j = 0; j < attrs.length; j++) {
+                    var attr = attrs[j];
+ 
+                    if(this._evts.indexOf(attr.name) != -1) {
+ 
+                        if(this.isMethodInList(attr.value)) {
+                            var self = this;
+                            childNode.addEventListener(attr.name.split('-')[1], function() {
+                                self.elem = childNode;
+                                self._methods[attr.value].apply(self);
+                            }, false);
+                        }else {
+                            throw 'method: ' + attr.value + ' is not defined';
+                        }
+ 
+                    }
+                };
+ 
+            };
+ 
+        };
+ 
+        dataBinding.prototype.getAllEvts = function() {
+            this._evts = [];
+ 
+            for (var key in document) {
+                if(key.indexOf('on') === 0) {
+                    key = key.replace('on', 'upon-');
+                    this._evts.push(key);
+                }
+            }
+        };
+ 
+        dataBinding.prototype.isMethodInList = function(val) {
+            var flag = false;
+            for(var fnName in this._methods) {
+                if(fnName == val) {
+                    flag = true;
+                }
+            }
+            return flag;
+        };
+ 
+        dataBinding.prototype.getObjectLength = function(obj) {
+            var count = 0;
+            for (var key in obj) {
+                count ++;
+            }
+ 
+            return count;
+        };
+ 
+        var db = new dataBinding({
+            id: 'binding',
+ 
+            data: {
+                name: 'test',
+                sex: 'you',
+                haha: '2333',
+                buttonName: 'ahha'
+            },
+ 
+            ready: function() {
+ 
+                console.log('dom ready');
+ 
+                console.log('change name');
+ 
+                this.name = "my data binding";
+ 
+            },
+ 
+            methods: {
+                fun: function() {
+                    console.log('test');
+                    console.log(this);
+                    this.name = "yes, this is mvvm";
+                    this.sex = "we do it";
+                    this.buttonName = 'hahahaah';
+                },
+ 
+                fun2: function() {
+                    console.log('dbclick');
+                }
+            }
+        });
+ 
+    </script>
+ 
+</body>
+</html>

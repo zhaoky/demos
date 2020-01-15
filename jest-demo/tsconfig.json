@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "noUnusedParameters": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "lib/",
+    "lib": ["dom", "es2016.array.include", "es2015", "es2016"],
+    "sourceMap": true,
+    "allowJs": true,
+    "noEmit": true
+  },
+  "include": ["src/**/*"]
+}

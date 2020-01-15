@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <script src="node_modules/lie/dist/lie.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.js"></script> -->
+    <!-- <script src="index.js"></script> -->
+    <script>
+      setTimeout(() => {
+        console.log(4);
+      }, 0);
+      new Promise(resolve => {
+        console.log(1);
+        for (var i = 0; i < 10000000; i++) {
+          i === 9999999 && resolve();
+        }
+        console.log(2);
+      }).then(() => {
+        console.log(5);
+      });
+      console.log(3);
+    </script>
+    <script>
+      console.log(6);
+      new Promise(resolve => {
+        resolve();
+      }).then(() => {
+        console.log(7);
+      });
+      //1 2 3 5 4 6 7
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #ddd;
+}
+
+#container {
+  background: #eee;
+  /* margin: 100px; */
+  /* width: 500px; */
+  height: 6.666667rem;
+  /* display: flex; */
+}
+
+.item {
+  /* width: 100px; */
+  /* height: 100px; */
+  border: 0.013333rem solid #333;
+  background: rgb(95, 185, 132);
+}
+
+#c1 {
+  /* height: 100px;  */
+  /* line-height: 90px;     */
+}
+
+#c2 {
+  height: 120px;
+  line-height: 0.933333rem;
+}
+
+#c3 {
+  height: 2rem;
+  line-height: 0.666667rem;
+}
