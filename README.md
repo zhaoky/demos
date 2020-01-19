@@ -20,4 +20,4 @@
 - `process-demo` process demo
 - `test-demo` 一些零碎的知识点测试
 - `ts-demo` typescript demo
-- `yargs-demo` yargs demo
+- `cilpboard-demo` cilpboard-demo
