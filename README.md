@@ -21,3 +21,5 @@
 - `test-demo` 一些零碎的知识点测试
 - `ts-demo` typescript demo
 - `cilpboard-demo` cilpboard-demo
+- `yargs-demo` yargs-demo
+- `contains-all-demo` contains-all-demo
