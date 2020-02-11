@@ -25,3 +25,4 @@
 - `contains-all-demo` contains-all-demo
 - `new-demo` new 关键字 demo
 - `instanceof-demo` instanceof demo
+- `generator-demo` generator-demo
