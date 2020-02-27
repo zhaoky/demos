@@ -28,3 +28,4 @@
 - `generator-demo` generator-demo
 - `promisify-demo` promisify-demo
 - `debugger-demo` 防调试 demo
+- `corb-demo` corb-demo
