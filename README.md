@@ -29,3 +29,4 @@
 - `promisify-demo` promisify-demo
 - `debugger-demo` 防调试 demo
 - `corb-demo` corb-demo
+- `vuerouter-demo` vue-router-demo
