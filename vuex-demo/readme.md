@@ -14,3 +14,4 @@
    - `getters` 里的函数参数为：`{state, getters, rootState, rootGetters}`，返回计算值。
 5. 辅助函数：`mapState，mapGetters，mapMutations，mapActions`。
 6. 各 `module` 的 `action, mutation, getter` 默认注册在全局命名空间。`state` 会在 `module` 以名称为 `key` 的 `state` 对象下。
+7. `flux` 相关[参考](http://www.ruanyifeng.com/blog/2016/01/flux.html)
