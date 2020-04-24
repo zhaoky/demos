@@ -30,3 +30,4 @@
 - `debugger-demo` 防调试 demo
 - `corb-demo` corb-demo
 - `vuerouter-demo` vue-router-demo
+- `vuex demo` vuex demo
