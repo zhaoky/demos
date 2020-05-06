@@ -31,3 +31,5 @@
 - `corb-demo` corb-demo
 - `vuerouter-demo` vue-router-demo
 - `vuex demo` vuex demo
+- `vue-ssr-demo` vue ssr demo
+- `spa-demo` prerender-spa-plugin demo
