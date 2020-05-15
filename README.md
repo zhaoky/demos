@@ -29,7 +29,7 @@
 - `promisify-demo` promisify-demo
 - `debugger-demo` 防调试 demo
 - `corb-demo` corb-demo
-- `vuerouter-demo` vue-router-demo
+- `vue-router-demo` vue-router-demo
 - `vuex demo` vuex demo
 - `vue-ssr-demo` vue ssr demo
 - `spa-demo` prerender-spa-plugin demo
