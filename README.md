@@ -32,4 +32,5 @@
 - `vue-router-demo` vue-router-demo
 - `vuex demo` vuex demo
 - `vue-ssr-demo` vue ssr demo
-- `spa-demo` prerender-spa-plugin demo
+- `prerender-spa-demo` prerender-spa-plugin demo
+- `nuxt-demo` nuxt.js demo
