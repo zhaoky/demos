@@ -34,3 +34,4 @@
 - `vue-ssr-demo` vue ssr demo
 - `prerender-spa-demo` prerender-spa-plugin demo
 - `nuxt-demo` nuxt.js demo
+- `microfe-single-spa-demo` 微前端 single-spa demo
