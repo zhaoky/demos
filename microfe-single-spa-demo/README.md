@@ -9,7 +9,14 @@
 - [官方链接](https://zh-hans.single-spa.js.org/)
 - [官方 demo](https://github.com/joeldenning/coexisting-vue-microfrontends)
 
-`single-spa` 是一个在前端应用程序中将多个 `javascript` 应用集合在一起的框架。
+`single-spa` 是一个在前端应用程序中将多个**不同框架** `javascript` 应用集合在一起的框架。
+
+同一框架可以直接用该框架对应的 `router` 进行微前端实践，无需 `single-spa`。
+
+参考链接：
+
+- [基于 Vue 技术栈的微前端方案实践](https://juejin.im/post/5e5c9bff51882548fe291950)
+- [微前端在美团外卖的实践 React](https://juejin.im/post/5e57b6f0f265da57547794c9)
 
 ### 组成部分
 
