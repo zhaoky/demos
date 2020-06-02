@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+  </body>
+  <script src="https://unpkg.com/axios@0.19.2/dist/axios.min.js"></script>
+  <script>
+    axios
+      .post(
+        'http://127.0.0.1:8080/api.do',
+        {
+          name: 'zkky',
+          age: 26,
+        },
+        {
+          headers: {
+            'Content-Type': 'text/plain',
+            'asd-1': 'nuenuenue',
+            'asd-2': 'asd',
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  </script>
+</html>

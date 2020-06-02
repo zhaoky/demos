@@ -35,3 +35,4 @@
 - `prerender-spa-demo` prerender-spa-plugin demo
 - `nuxt-demo` nuxt.js demo
 - `microfe-single-spa-demo` 微前端 single-spa demo
+- `koa-demo` koa 的一个跨域请求 demo
