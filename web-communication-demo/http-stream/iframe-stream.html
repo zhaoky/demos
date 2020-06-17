@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基于 iframe 的数据流</title>
+  </head>
+  <body></body>
+  <script>
+    function process(data) {
+      console.log(data);
+    }
+    var dataStream = function (url) {
+      var ifr = document.createElement('iframe'),
+        timer;
+      ifr.src = url;
+      document.body.appendChild(ifr);
+    };
+    dataStream('http://localhost:8088/iframe');
+  </script>
+</html>

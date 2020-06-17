@@ -36,3 +36,4 @@
 - `nuxt-demo` nuxt.js demo
 - `microfe-single-spa-demo` 微前端 single-spa demo
 - `koa-demo` koa 的一个跨域请求 demo
+- `websocket-demo` Web 端即时通讯技术盘点 demo
