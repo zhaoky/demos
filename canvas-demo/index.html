@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>canvas进度盘demo</title>
+    <style>
+      .bg {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background: #192f47;
+        display: flex;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 原文链接 https://juejin.im/post/5b25e3396fb9a00e7a3d5161 -->
+    <div class="bg">
+      <canvas id="canvas"></canvas>
+    </div>
+  </body>
+  <script>
+    // 画圆环
+    class Annulus {
+      constructor(obj = {}) {
+        /*
+         * speed -- 速度
+         * color -- 颜色
+         * size -- 大小
+         * lineWidth -- 线宽
+         * location -- 圆心位置
+         * text -- 文字
+         * value -- 圆环滚动的值 ，这里指是百分比
+         */
+        this.speed = obj.speed || 0.1;
+        this.color = obj.color || '#ffeedd';
+        // 180 是UI的大体尺寸是在180px，以1920为基准
+        this.size = Math.ceil((obj.size || 80) * (canvas.width / 180));
+        this.lineWidth = obj.lineWidth || 10;
+        this.location = obj.location || { x: canvas.width / 2, y: canvas.height / 2 };
+        this.textName = obj.text || '第二行文字title';
+        this.value = obj.value || 0;
+        // 这里是圆的终点减去圆的起点
+        this.degree = (Math.PI * 1.5) / 100;
+        this.animate = this.animate.bind(this);
+        this.tol = 0;
+      }
+
+      drawCircleLay() {
+        // 绘制进度条
+        if (this.value == 0) return;
+        ctx.beginPath();
+        var gradient = ctx.createLinearGradient(0, this.linearLocation().start, 0, this.linearLocation().end);
+        gradient.addColorStop(0, '#0f6cd9');
+        gradient.addColorStop(1, '#05a6da');
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = this.lineWidth;
+        ctx.lineCap = 'round';
+        ctx.arc(this.location.x, this.location.y, this.size, Math.PI * 0.75, Math.PI * 0.75 + this.tol * this.degree, false);
+        ctx.stroke();
+      }
+
+      drawBg() {
+        // 绘制背影圈
+        ctx.beginPath();
+        ctx.strokeStyle = '#2d4264';
+        ctx.lineWidth = this.lineWidth;
+        ctx.lineCap = 'round';
+        ctx.arc(this.location.x, this.location.y, this.size, Math.PI * 0.75, Math.PI * 2.25, false);
+        ctx.stroke();
+      }
+
+      drawCenterCircle() {
+        // 绘制中心圆
+        ctx.beginPath();
+        var gradient = ctx.createLinearGradient(0, this.linearLocation().start, 0, this.linearLocation().end);
+        gradient.addColorStop(0, '#39a8ce');
+        gradient.addColorStop(1, '#5647c9');
+        ctx.fillStyle = gradient;
+        ctx.arc(this.location.x, this.location.y, this.size - 15, 0, Math.PI * 2, false);
+        ctx.fill();
+      }
+
+      drawCenterBorderCircle() {
+        // 绘制中心圆周边的那圈
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+        ctx.lineWidth = 10;
+        ctx.arc(this.location.x, this.location.y, this.size - 20, 0, Math.PI * 2, false);
+        ctx.stroke();
+      }
+
+      linearLocation() {
+        // 设定渐变背影的起始结束点
+        let start = this.location.y - ((this.size - 15) * 2 + this.lineWidth) / 2;
+        let end = start + (this.size - 15) * 2 + this.lineWidth;
+        return { start: start, end: end };
+      }
+
+      drawTextPercent(percent) {
+        // 绘制进度文字
+        ctx.beginPath();
+        ctx.font = `${this.size / 2.5}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#192f47';
+        ctx.fillText(`${parseInt(percent)}%`, this.location.x, this.location.y);
+        ctx.stroke();
+      }
+
+      drawTextName(text) {
+        // 绘制二级文字
+        ctx.beginPath();
+        ctx.font = `${this.size / 7}px "Microsoft YaHei"`;
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#192f47';
+        ctx.fillText(text, this.location.x, this.location.y * (4 / 3));
+        ctx.stroke();
+      }
+
+      animate() {
+        window.requestAnimationFrame(this.animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.drawBg();
+        this.drawCircleLay();
+        this.drawCenterCircle();
+        this.drawCenterBorderCircle();
+        this.drawTextPercent(this.tol);
+        this.drawTextName(this.textName);
+        if (this.tol < this.value) {
+          this.tol += this.speed;
+        }
+      }
+
+      run() {
+        this.animate();
+      }
+    }
+
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    canvas.width = Math.ceil(300 * (window.innerWidth / 1920));
+    canvas.height = Math.ceil(300 * (window.innerWidth / 1920));
+
+    // 实例化圆环
+    let annulus = new Annulus({
+      color: '#47be13',
+      size: '80',
+      speed: 2,
+      value: 60,
+      text: '在线率',
+    });
+    console.log(123);
+    annulus.run();
+  </script>
+</html>
