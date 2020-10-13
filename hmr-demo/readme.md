@@ -25,6 +25,7 @@
 ## HotModuleReplacementPlugin
 
 - 会加入很多运行时代码，用于执行热更新，`moudle` 新增了一个属性为 `hot`。
+- Compilation.mainTemplate 的 bootstrap 钩子注入的 lib/HotModuleReplacement.runtime.js，这个 Runtime 中会调用 mainTemplate 根据不同环境注入的 runtime.js。在浏览器环境下，注入的是 lib/web/JsonpMainTemplate.runtime.js
 - 在钩子 `compilation.hooks.additionalChunkAssets` 里 生成热更新对应的 `js` 和 `json` 资源文件
 
 ## 更新代码时
@@ -36,3 +37,11 @@
   - 删除过期的模块，就是需要替换的模块
   - 将新的模块添加到 `modules` 中
   - 通过 `__webpack_require__` 执行相关模块的代码
+
+## 如何让自己的代码支持 HMR
+
+Webpack 的模块实际也有一个 module 树，module 树的根节点就是入口文件（entry），当我们一个模块代码发生了更改，就需要执行 update 事件，如果当前模块处理不了这个事件，即不知道怎么实现 HMR，那么会冒泡到父依赖节点，直到有模块可以处理 HMR 更新代码，如果到了根节点（entry）都没有处理 update 事件，就会刷新页面。
+
+因为我们的代码究竟能不能实现 HMR 只有编写者知道，比如我们一个 Vue 应用，修改了 Vue 组件的 template 和 state 肯定是不同的处理方式，所以不能一概而论地都给所有的 JavaScript 模块添加 module.hot.accept()，要视情况而定。
+
+幸运的是大多数框架，像 React、Vue、Angular 都有自己的 HMR 工具。这些工具有的是通过 loader 的方式来实现，有的是通过 Babel 插件方式来实现的。另外要实现 Less、Sass、CSS 文件的热加载，我们可以直接使用 style-loader 来完成
