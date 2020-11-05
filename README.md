@@ -39,3 +39,4 @@
 - `websocket-demo` Web 端即时通讯技术盘点 demo
 - `canvas-demo` canvas 进度盘 demo
 - `handwrite-demo` 手写一些常见实现的 demo
+- `react-redux-demo` react redux demo
