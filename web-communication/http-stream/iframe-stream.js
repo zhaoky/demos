@@ -19,7 +19,7 @@ var server = http
       });
     }
   })
-  .listen(8088, 'localhost');
+  .listen(3000, 'localhost');
 function sendRandomData(timer, res) {
   var randomNum = Math.floor(10000 * Math.random());
   console.log(randomNum.toString());
@@ -29,3 +29,4 @@ function sendRandomData(timer, res) {
   }
   res.write('<script type="text/javascript">parent.process(\'' + randomNum.toString() + "')</script> ");
 }
+console.log('请打开地址体验基于iframe的stream：http://localhost:3000');

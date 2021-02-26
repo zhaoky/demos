@@ -11,20 +11,19 @@
 2. `handwrite` 手写一些常见实现的 demo
 3. `angular-module` angular1.x 模块依赖
 4. `angular-todolist` angular1.x 所开发的单页面应用
-5. `pinterest-style` 3 种瀑布流布局
-6. `ast`
-7. `node`
-8. `typescript`
-9. `cilpboard` 粘贴板测试
-10. `generator`
-11. `corb` 跨域读取阻止
-12. `vue-router`
-13. `vuex`
-14. `vue-ssr`
-15. `hmr` HMR 源码解析
-16. `prerender-spa` 预渲染
-17. `microfe-single-spa` 微前端
-18. `koa` koa 的一个跨域请求
-19. `web-communication` Web 端即时通讯技术盘点
-20. `canvas` canvas 进度盘
-21. `react-redux`
+5. `ast`
+6. `node`
+7. `typescript`
+8. `cilpboard` 粘贴板测试
+9. `generator`
+10. `corb` 跨域读取阻止
+11. `vue-router`
+12. `vuex`
+13. `vue-ssr`
+14. `hmr` HMR 源码解析
+15. `prerender-spa` 预渲染
+16. `microfe-single-spa` 微前端
+17. `koa` koa 的一个跨域请求
+18. `web-communication` Web 端即时通讯技术盘点
+19. `canvas` canvas 进度盘
+20. `react-redux`

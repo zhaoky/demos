@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>基于 XHR 对象的 streaming 方式</title>
-  </head>
-  <body></body>
-  <script>
-    function createStreamClient(url, progress, done) {
-      //received为接收到数据的计数器
-      var xhr = new XMLHttpRequest(),
-        received = 0;
-      xhr.open('get', url, true);
-      xhr.onreadystatechange = function () {
-        var result;
-        if (xhr.readyState == 3) {
-          //console.log(xhr.responseText);
-          result = xhr.responseText.substring(received);
-          received += result.length;
-          progress(result);
-        } else if (xhr.readyState == 4) {
-          done(xhr.responseText);
-        }
-      };
-      xhr.send(null);
-      return xhr;
-    }
-    var client = createStreamClient(
-      'http://localhost:8088/stream ',
-      function (data) {
-        console.log('Received: ' + data);
-      },
-      function (data) {
-        console.log('Done,the last data is:' + data);
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基于 XHR 对象的 streaming 方式</title>
+</head>
+
+<body></body>
+<script>
+  function createStreamClient(url, progress, done) {
+    //received为接收到数据的计数器
+    var xhr = new XMLHttpRequest(),
+      received = 0;
+    xhr.open('get', url, true);
+    xhr.onreadystatechange = function () {
+      var result;
+      if (xhr.readyState == 3) {
+        //console.log(xhr.responseText);
+        result = xhr.responseText.substring(received);
+        received += result.length;
+        progress(result);
+      } else if (xhr.readyState == 4) {
+        done(xhr.responseText);
       }
-    );
-  </script>
+    };
+    xhr.send(null);
+    return xhr;
+  }
+  var client = createStreamClient(
+    'http://localhost:3000/stream ',
+    function (data) {
+      console.log('Received: ' + data);
+    },
+    function (data) {
+      console.log('Done,the last data is:' + data);
+    }
+  );
+</script>
+
 </html>

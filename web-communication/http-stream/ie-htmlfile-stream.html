@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>基于htmlfile的数据流通信</title>
-  </head>
-  <body></body>
-  <script>
-    function connect_htmlfile(url, callback) {
-      var transferDoc = new ActiveXObject('htmlfile');
-      transferDoc.open();
-      transferDoc.write('<!DOCTYPE html><html><body><script  type="text/javascript"> ' + "document.domain='" + document.domain + "' ; " + '<\/script><\/body><\/html>');
-      transferDoc.close();
-      var ifrDiv = transferDoc.createElement('div ');
-      transferDoc.body.appendChild(ifrDiv);
-      ifrDiv.innerHTML = "<iframe src='" + url + "' ><\/iframe> ";
-      transferDoc.callback = callback;
-      setInterval(function () {}, 10000);
-    }
-    function prograss(data) {
-      alert(data);
-    }
-    connect_htmlfile('http://localhost:8088/htmlfile', prograss);
-  </script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基于htmlfile的数据流通信</title>
+</head>
+
+<body></body>
+<script>
+  function connect_htmlfile(url, callback) {
+    var transferDoc = new ActiveXObject('htmlfile');
+    transferDoc.open();
+    transferDoc.write('<!DOCTYPE html><html><body><script  type="text/javascript"> ' + "document.domain='" + document.domain + "' ; " + '<\/script><\/body><\/html>');
+    transferDoc.close();
+    var ifrDiv = transferDoc.createElement('div ');
+    transferDoc.body.appendChild(ifrDiv);
+    ifrDiv.innerHTML = "<iframe src='" + url + "' ><\/iframe> ";
+    transferDoc.callback = callback;
+    setInterval(function () { }, 10000);
+  }
+  function prograss(data) {
+    alert(data);
+  }
+  connect_htmlfile('http://localhost:3000/htmlfile', prograss);
+</script>
+
 </html>

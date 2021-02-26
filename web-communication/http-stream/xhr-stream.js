@@ -1,7 +1,16 @@
 var http = require('http');
 var fs = require('fs');
 var count = 0;
-var server = http
+function sendRandomData(timer, res) {
+  var randomNum = Math.floor(10000 * Math.random());
+  console.log(randomNum);
+  if (count++ == 100) {
+    clearInterval(timer);
+    res.end(randomNum.toString());
+  }
+  res.write(randomNum.toString());
+}
+http
   .createServer(function (req, res) {
     if (req.url == '/stream') {
       res.setHeader('content-type', 'multipart/octet-stream');
@@ -19,13 +28,5 @@ var server = http
       });
     }
   })
-  .listen(8088, 'localhost');
-function sendRandomData(timer, res) {
-  var randomNum = Math.floor(10000 * Math.random());
-  console.log(randomNum);
-  if (count++ == 100) {
-    clearInterval(timer);
-    res.end(randomNum.toString());
-  }
-  res.write(randomNum.toString());
-}
+  .listen(3000, 'localhost');
+console.log('请打开地址体验xhr-stream：http://localhost:3000');

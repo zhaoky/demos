@@ -1,5 +1,4 @@
 const Koa = require('koa');
-
 const fs = require('fs');
 const app = new Koa();
 const static = require('koa-static');
@@ -63,5 +62,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(3000, () => {
-  console.log(`渲染地址：http://localhost:3000`);
+  console.log(`聊天室地址：http://localhost:3000`);
 });

@@ -7,7 +7,7 @@ var server = http
       res.end(new Date().toLocaleString());
     }
     if (req.url == '/') {
-      fs.readFile('./polling.html', 'binary', function (err, file) {
+      fs.readFile('./index.html', 'binary', function (err, file) {
         if (!err) {
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.write(file, 'binary');
@@ -23,3 +23,4 @@ server.on('connection', function (socket) {
 server.on('close', function () {
   console.log('服务器被关闭');
 });
+console.log('请打开地址体验普通ajax轮询：http://localhost:8088');

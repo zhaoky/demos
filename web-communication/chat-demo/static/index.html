@@ -1,308 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>基于this.socket.io聊天室</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      #app {
-        margin: 50px auto;
-        width: 300px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .title {
-        text-align: center;
-        margin-bottom: 50px;
-      }
-      .login {
-      }
-      .info {
-        border-bottom: 1px solid #d9d9d9;
-        /* padding: 10px 5px; */
-      }
-      .login-input {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-variant: tabular-nums;
-        list-style: none;
-        font-feature-settings: 'tnum';
-        position: relative;
-        display: inline-block;
-        min-width: 0;
-        padding: 4px 11px;
-        color: rgba(0, 0, 0, 0.65);
-        font-size: 14px;
-        line-height: 1.5715;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #d9d9d9;
-        border-radius: 2px;
-        transition: all 0.3s;
-      }
-      .login-input:focus {
-        border-color: #40a9ff;
-        border-right-width: 1px !important;
-        outline: 0;
-        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-      }
-      .login-btn {
-        line-height: 1.5715;
-        position: relative;
-        display: inline-block;
-        font-weight: 400;
-        white-space: nowrap;
-        text-align: center;
-        background-image: none;
-        border: 1px solid transparent;
-        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-        user-select: none;
-        touch-action: manipulation;
-        height: 32px;
-        padding: 4px 15px;
-        font-size: 14px;
-        border-radius: 2px;
-        color: rgba(0, 0, 0, 0.65);
-        background: #fff;
-        border-color: #d9d9d9;
-      }
-      .chat {
-        height: 600px;
-        width: 500px;
-        overflow: hidden;
-        border: 1px solid #d9d9d9;
-      }
-      .user-list {
-        float: left;
-        width: 150px;
-        height: 100%;
-        border-right: 1px solid #d9d9d9;
-      }
-      .chat-list {
-        float: right;
-        height: 100%;
-        overflow-y: scroll;
-        width: 348px;
-      }
-      .message {
-        color: red;
-        height: 50px;
-      }
-      .input {
-        width: 500px;
-        height: 50px;
-        border: 1px solid #d9d9d9;
-        overflow: hidden;
-      }
-      .input-area {
-        height: 100%;
-        float: left;
-        width: 398px;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-variant: tabular-nums;
-        list-style: none;
-        font-feature-settings: 'tnum';
-        position: relative;
-        display: inline-block;
-        min-width: 0;
-        /* padding: 4px 11px; */
-        color: rgba(0, 0, 0, 0.65);
-        font-size: 14px;
-        line-height: 1.5715;
-        background-color: #fff;
-        background-image: none;
-        border: 0;
-        border-radius: 2px;
-        transition: all 0.3s;
-      }
-      .input-area:focus {
-        border-color: #40a9ff;
-        border-right-width: 1px !important;
-        outline: 0;
-        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-      }
-      .input-send {
-        height: 100%;
-        width: 100px;
-        float: right;
-        line-height: 1.5715;
-        position: relative;
-        display: inline-block;
-        font-weight: 400;
-        white-space: nowrap;
-        text-align: center;
-        background-image: none;
-        border: 1px solid transparent;
-        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-        user-select: none;
-        touch-action: manipulation;
-        /* padding: 4px 15px; */
-        font-size: 14px;
-        border-radius: 2px;
-        color: rgba(0, 0, 0, 0.65);
-        background: #fff;
-        border-color: #d9d9d9;
-      }
-      .number-info {
-        /* padding: 10px 0; */
-        font-size: 14px;
-      }
-      .number {
-        color: #40a9ff;
-      }
-      .number-list {
-        /* padding: 20px 0; */
-      }
-      .chat-list {
-        /* padding: 10px; */
-      }
-      .-info {
-        width: 200px;
-        margin-bottom: 30px;
-        float: left;
-        margin-left: 20px;
-        color: #7d427d;
-      }
-      .-me {
-        float: right;
-        color: #928f1a;
-        margin-right: 20px;
-        margin-left: 0;
-        text-align: right;
-      }
-      .fade-enter-active,
-      .fade-leave-active {
-        transition: opacity 0.5s;
-      }
-      .fade-enter,
-      .fade-leave-active {
-        opacity: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <div v-if="isLogin" class="login">
-        <div class="title">请登录</div>
-        <input type="text" v-model="user.userName" class="login-input" />
-        <button @click="login" class="login-btn">登录</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基于socket.io的聊天室</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #app {
+      margin: 50px auto;
+      width: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .login {}
+
+    .info {
+      border-bottom: 1px solid #d9d9d9;
+      /* padding: 10px 5px; */
+    }
+
+    .login-input {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-variant: tabular-nums;
+      list-style: none;
+      font-feature-settings: 'tnum';
+      position: relative;
+      display: inline-block;
+      min-width: 0;
+      padding: 4px 11px;
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 14px;
+      line-height: 1.5715;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .login-input:focus {
+      border-color: #40a9ff;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+
+    .login-btn {
+      line-height: 1.5715;
+      position: relative;
+      display: inline-block;
+      font-weight: 400;
+      white-space: nowrap;
+      text-align: center;
+      background-image: none;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      user-select: none;
+      touch-action: manipulation;
+      height: 32px;
+      padding: 4px 15px;
+      font-size: 14px;
+      border-radius: 2px;
+      color: rgba(0, 0, 0, 0.65);
+      background: #fff;
+      border-color: #d9d9d9;
+    }
+
+    .chat {
+      height: 600px;
+      width: 500px;
+      overflow: hidden;
+      border: 1px solid #d9d9d9;
+    }
+
+    .user-list {
+      float: left;
+      width: 150px;
+      height: 100%;
+      border-right: 1px solid #d9d9d9;
+    }
+
+    .chat-list {
+      float: right;
+      height: 100%;
+      overflow-y: scroll;
+      width: 348px;
+    }
+
+    .message {
+      color: red;
+      height: 50px;
+    }
+
+    .input {
+      width: 500px;
+      height: 50px;
+      border: 1px solid #d9d9d9;
+      overflow: hidden;
+    }
+
+    .input-area {
+      height: 100%;
+      float: left;
+      width: 398px;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-variant: tabular-nums;
+      list-style: none;
+      font-feature-settings: 'tnum';
+      position: relative;
+      display: inline-block;
+      min-width: 0;
+      /* padding: 4px 11px; */
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 14px;
+      line-height: 1.5715;
+      background-color: #fff;
+      background-image: none;
+      border: 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .input-area:focus {
+      border-color: #40a9ff;
+      border-right-width: 1px !important;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+
+    .input-send {
+      height: 100%;
+      width: 100px;
+      float: right;
+      line-height: 1.5715;
+      position: relative;
+      display: inline-block;
+      font-weight: 400;
+      white-space: nowrap;
+      text-align: center;
+      background-image: none;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      user-select: none;
+      touch-action: manipulation;
+      /* padding: 4px 15px; */
+      font-size: 14px;
+      border-radius: 2px;
+      color: rgba(0, 0, 0, 0.65);
+      background: #fff;
+      border-color: #d9d9d9;
+    }
+
+    .number-info {
+      /* padding: 10px 0; */
+      font-size: 14px;
+    }
+
+    .number {
+      color: #40a9ff;
+    }
+
+    .number-list {
+      /* padding: 20px 0; */
+    }
+
+    .chat-list {
+      /* padding: 10px; */
+    }
+
+    .-info {
+      width: 200px;
+      margin-bottom: 30px;
+      float: left;
+      margin-left: 20px;
+      color: #7d427d;
+    }
+
+    .-me {
+      float: right;
+      color: #928f1a;
+      margin-right: 20px;
+      margin-left: 0;
+      text-align: right;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.5s;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div v-if="isLogin" class="login">
+      <div class="title">请登录</div>
+      <input type="text" v-model="user.userName" class="login-input" />
+      <button @click="login" class="login-btn">登录</button>
+    </div>
+    <div v-else class="content">
+      <div class="chat">
+        <div class="info">你好，{{user.userName}}。今日时间：{{date}} <span @click="logout">[退出]</span></div>
+        <div class="user-list">
+          <div class="number-info">当前在线人数：<span class="number">{{number}}</span></div>
+          <div v-for="item in userList" class="number-list">
+            <div class="-name">{{item}}</div>
+          </div>
+        </div>
+        <div class="chat-list">
+          <div class="message">
+            <transition name="fade">
+              <div v-if="message">{{message}}</div>
+            </transition>
+          </div>
+          <div v-for="item in chatList" class="-info" :class='item.isMe?"-me":""'>
+            {{item.userName}}:{{item.content}}
+          </div>
+        </div>
       </div>
-      <div v-else class="content">
-        <div class="chat">
-          <div class="info">你好，{{user.userName}}。今日时间：{{date}} <span @click="logout">[退出]</span></div>
-          <div class="user-list">
-            <div class="number-info">当前在线人数：<span class="number">{{number}}</span></div>
-            <div v-for="item in userList" class="number-list">
-              <div class="-name">{{item}}</div>
-            </div>
-          </div>
-          <div class="chat-list">
-            <div class="message">
-              <transition name="fade">
-                <div v-if="message">{{message}}</div>
-              </transition>
-            </div>
-            <div v-for="item in chatList" class="-info" :class='item.isMe?"-me":""'>
-              {{item.userName}}:{{item.content}}
-            </div>
-          </div>
-        </div>
-        <div class="input">
-          <input type="text" v-model="content" class="input-area" />
-          <button @click="send" class="input-send">发送</button>
-        </div>
+      <div class="input">
+        <input type="text" v-model="content" class="input-area" />
+        <button @click="send" class="input-send">发送</button>
       </div>
     </div>
-  </body>
-  <script src="https://cn.vuejs.org/js/vue.min.js"></script>
-  <script src="https://lib.baomitu.com/socket.io/2.3.0/socket.io.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      data: {
-        user: {
-          userName: '',
-          uid: '',
-          content: '',
-        },
-        isLogin: true,
-        number: 0,
-        userList: [],
-        chatList: [],
+  </div>
+</body>
+<script src="https://cn.vuejs.org/js/vue.min.js"></script>
+<script src="https://lib.baomitu.com/socket.io/2.3.0/socket.io.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      user: {
+        userName: '',
+        uid: '',
         content: '',
-        message: '',
       },
-      computed: {
-        date() {
-          return `${new Date().getFullYear()}年${new Date().getMonth()}月${new Date().getDate()}日`;
-        },
+      isLogin: true,
+      number: 0,
+      userList: [],
+      chatList: [],
+      content: '',
+      message: '',
+    },
+    computed: {
+      date() {
+        return `${new Date().getFullYear()}年${new Date().getMonth()}月${new Date().getDate()}日`;
       },
-      methods: {
-        login() {
-          if (this.user.userName === '') {
-            alert('请输入用户名');
-            return;
-          }
-          this.socket = io.connect('ws://localhost:3000');
-          this.socket.emit('login', this.user.userName);
+    },
+    methods: {
+      login() {
+        if (this.user.userName === '') {
+          alert('请输入用户名');
+          return;
+        }
+        this.socket = io.connect('ws://localhost:3000');
+        this.socket.emit('login', this.user.userName);
 
-          //开启监听后端登录信息
-          this.socket.on('login', (res) => {
-            this.userList = Object.values(res.onlineUsers);
-            this.number = res.number;
-            this.isLogin = false;
-            this.message = `系统消息：${res.curUser.userName}登录了聊天室！`;
-            setTimeout(() => {
-              this.message = '';
-            }, 2000);
-          });
-          //开启监听后端登出信息
-          this.socket.on('logout', (res) => {
-            this.userList = Object.values(res.onlineUsers);
-            this.number = res.number;
-            this.message = `系统消息：${res.curUser.userName}离开了聊天室！`;
-            setTimeout(() => {
-              this.message = '';
-            }, 2000);
-          });
-          //开启监听后端普通信息
-          this.socket.on('message', (res) => {
-            // 接收到的都是用户发来的消息，肯定不是自己的
-            console.log('接受到message', res);
-            this.chatList.push({ ...res, isMe: false });
-          });
-        },
-        logout() {
-          console.log('手动退出');
-          this.socket.close();
-          this.isLogin = true;
-        },
-        send() {
-          this.socket.emit('message', {
-            userName: this.user.userName,
-            content: this.content,
-          });
-          this.chatList.push({
-            userName: this.user.userName,
-            content: this.content,
-            isMe: true,
-          });
-          this.content = '';
-        },
+        //开启监听后端登录信息
+        this.socket.on('login', (res) => {
+          this.userList = Object.values(res.onlineUsers);
+          this.number = res.number;
+          this.isLogin = false;
+          this.message = `系统消息：${res.curUser.userName}登录了聊天室！`;
+          setTimeout(() => {
+            this.message = '';
+          }, 2000);
+        });
+        //开启监听后端登出信息
+        this.socket.on('logout', (res) => {
+          this.userList = Object.values(res.onlineUsers);
+          this.number = res.number;
+          this.message = `系统消息：${res.curUser.userName}离开了聊天室！`;
+          setTimeout(() => {
+            this.message = '';
+          }, 2000);
+        });
+        //开启监听后端普通信息
+        this.socket.on('message', (res) => {
+          // 接收到的都是用户发来的消息，肯定不是自己的
+          console.log('接受到message', res);
+          this.chatList.push({ ...res, isMe: false });
+        });
       },
-    });
-  </script>
+      logout() {
+        console.log('手动退出');
+        this.socket.close();
+        this.isLogin = true;
+      },
+      send() {
+        this.socket.emit('message', {
+          userName: this.user.userName,
+          content: this.content,
+        });
+        this.chatList.push({
+          userName: this.user.userName,
+          content: this.content,
+          isMe: true,
+        });
+        this.content = '';
+      },
+    },
+  });
+</script>
+
 </html>
