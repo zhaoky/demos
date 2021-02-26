@@ -6,7 +6,7 @@ Web 端即时通讯方案大致有 4 种：**传统 Ajax 短轮询、Comet 技�
 
 原理是在客户端通过 `Ajax` 的方式的方式每隔一小段时间就发送一个请求到服务器，服务器返回最新数据，然后客户端根据获得的数据来更新界面，这样就间接实现了即时通信。优点是简单，缺点是对服务器压力较大，浪费带宽流量。
 
-实例代码见 `web-communication-demo/polling`
+实例代码见 [`web-communication/polling`](https://github.com/zhaoky/demos/tree/master/web-communication/polling)
 
 ## Comet
 
@@ -16,7 +16,7 @@ Web 端即时通讯方案大致有 4 种：**传统 Ajax 短轮询、Comet 技�
 
 客户端发送一个请求到服务器，服务器查看客户端请求的数据是否发生了变化（是否有最新数据），如果发生变化则立即响应返回，否则保持这个连接并定期检查最新数据，直到发生了数据更新或连接超时。同时客户端连接一旦断开，则再次发出请求，这样在相同时间内大大减少了客户端请求服务器的次数。
 
-实例代码见 `web-communication-demo/long-polling`
+实例代码见 [`web-communication/long-polling`](https://github.com/zhaoky/demos/tree/master/web-communication/long-polling)
 
 ### 基于 http-stream 通信
 
@@ -30,19 +30,19 @@ Web 端即时通讯方案大致有 4 种：**传统 Ajax 短轮询、Comet 技�
 'content-type', 'multipart/octet-stream'
 ```
 
-实例代码见 `web-communication-demo/http-stream/xhr-stream.js、xhr-stream.html`
+实例代码见 [`web-communication/http-stream/xhr-stream.html`](https://github.com/zhaoky/demos/blob/master/web-communication/http-stream/xhr-stream.html)
 
 #### 基于 iframe 的数据流
 
 在浏览器中动态载入一个 `iframe`,让它的 `src` 属性指向请求的服务器的 `URL`，实际上就是向服务器发送了一个 `http` 请求，然后在浏览器端创建一个处理数据的函数，在服务端通过 `iframe` 与浏览器的长连接定时输出数据给客户端，但是这个返回的数据并不是一般的数据，而是一个类似于 `<script type=\"text/javascript\">parent.process('"+randomNum.toString()+"')</script>`脚本执行的方式，浏览器接收到这个数据就会将它解析成 `js` 代码并找到页面上指定的函数去执行，实际上是服务端间接使用自己的数据间接调用了客户端的代码，达到实时更新客户端的目的。
 
-实例代码见 `web-communication-demo/http-stream/iframe-stream.js、iframe-stream.html`
+实例代码见 [`web-communication/http-stream/iframe-stream.html`](https://github.com/zhaoky/demos/blob/master/web-communication/http-stream/iframe-stream.html)
 
 #### IE 中基于 htmlfile 的数据流通信
 
 在 IE 中，使用 `iframe` 请求服务端，服务端保持通信连接没有全部返回之前，浏览器 `title` 一直处于加载状态，并且底部也显示正在加载，这对于一个产品来讲用户体验是不好的，于是谷歌的天才们又想出了一中 `hack` 方式：动态生成一个 `htmlfile` 对象，这个对象 `ActiveX` 形式的 `com` 组件，它实际上就是一个在内存中实现的 `HTML` 文档，通过将生成的 `iframe` 添加到这个内存中的 `HTMLfile` 中，并利用 `iframe` 的数据流通信方式达到上面的效果。同时由于 `HTMLfile` 对象并不是直接添加到页面上的，所以并没有造成浏览器显示正在加载的现象。
 
-实例代码见 `web-communication-demo/http-stream/ie-htmlfile-stream.js、ie-htmlfile-stream.html`
+实例代码见 [`web-communication/http-stream/ie-htmlfile-stream.html`](https://github.com/zhaoky/demos/blob/master/web-communication/http-stream/ie-htmlfile-stream.html)
 
 ### comet 技术需注意
 
@@ -61,7 +61,7 @@ Web 端即时通讯方案大致有 4 种：**传统 Ajax 短轮询、Comet 技�
 - `EventSource` 对象
 - `"Content-Type": "text/event-stream"`
 
-实例代码见 `web-communication-demo/sse`
+实例代码见 [`web-communication-demo/sse`](https://github.com/zhaoky/demos/tree/master/web-communication/sse)
 
 ### 与 WebSocket 区别
 
@@ -121,7 +121,7 @@ Upgrade: websocket
 
 ### 基于 socket.io 打造的简易聊天室
 
-实例代码见 `web-communication-demo/chat-demo`
+实例代码见 [`web-communication-demo/chat`](https://github.com/zhaoky/demos/tree/master/web-communication/chat)
 
 ## 参考
 
