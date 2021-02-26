@@ -1,6 +1,6 @@
 # Web 端即时通讯技术盘点
 
-Web 端即时通讯方案大致有 4 种：**传统 Ajax 短轮询、Comet 技术、WebSocket 技术、SSE（Server-sent Events）**。本文将简要介绍这 4 种技术的原理，并指出各自的异同点、优缺点等。[原文链接](http://www.52im.net/thread-338-1-1.html)
+Web 端即时通讯方案大致有 4 种：**传统 Ajax 短轮询、Comet 技术、WebSocket 技术、SSE（Server-sent Events）**。本文将简要介绍这 4 种技术的原理，并指出各自的异同点、优缺点等。
 
 ## 传统 Ajax 短轮询
 
@@ -122,3 +122,7 @@ Upgrade: websocket
 ### 基于 socket.io 打造的简易聊天室
 
 实例代码见 `web-communication-demo/chat-demo`
+
+## 参考
+
+[史上最全 Web 端即时通讯技术原理详解](http://www.52im.net/thread-338-1-1.html)
