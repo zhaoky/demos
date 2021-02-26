@@ -1,0 +1,19 @@
+{
+  "name": "hmr",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^4.3.0",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
+  "dependencies": {
+    "webpack": "4",
+    "webpack-cli": "3"
+  }
+}

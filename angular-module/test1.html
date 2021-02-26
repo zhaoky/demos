@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script src="http://cdn.bootcss.com/angular.js/1.5.7/angular.min.js"></script>
+	<script src="test1.js"></script>
+</head>
+
+<body>
+	<div id="a" ng-controller="controller1"></div>
+	<div id="b" ng-controller="controller2"></div>
+	<div id="c" ng-controller="controller3"></div>
+	<div id="d" ng-controller="controller4"></div>
+
+
+	<script>
+		angular.bootstrap(document.getElementById("a"), ["module1"]);
+		angular.bootstrap(document.getElementById("b"), ["module2"]);
+		angular.bootstrap(document.getElementById("c"), ["module3"]);
+		angular.bootstrap(document.getElementById("d"), ["module4"])
+	</script>
+</body>
+
+</html>

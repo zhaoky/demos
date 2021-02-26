@@ -6,37 +6,25 @@
 
 ## demo 列表（按入库顺序）
 
-- `angular-module-demo` angular1.x 模块依赖 demo
-- `angular-todolist` angular1.x 所开发的单页面应用
-- `browserify` browserify demo
-- `observer-pattern` 一个简单的发布订阅模式 demo
-- `pinterest-style` 3 种瀑布流布局 demo
-- `ast-demo` ast demo
-- `babel-demo` babel demo
-- `jest-demo` jest demo
-- `node-demo` node demo
-- `postcss-demo` postcss demo
-- `promise-demo` promise demo
-- `process-demo` process demo
-- `test-demo` 一些零碎的知识点测试
-- `ts-demo` typescript demo
-- `cilpboard-demo` cilpboard-demo
-- `yargs-demo` yargs-demo
-- `contains-all-demo` contains-all-demo
-- `new-demo` new 关键字 demo
-- `instanceof-demo` instanceof demo
-- `generator-demo` generator-demo
-- `promisify-demo` promisify-demo
-- `debugger-demo` 防调试 demo
-- `corb-demo` corb-demo
-- `vue-router-demo` vue-router-demo
-- `vuex demo` vuex demo
-- `vue-ssr-demo` vue ssr demo
-- `prerender-spa-demo` prerender-spa-plugin demo
-- `nuxt-demo` nuxt.js demo
-- `microfe-single-spa-demo` 微前端 single-spa demo
-- `koa-demo` koa 的一个跨域请求 demo
-- `websocket-demo` Web 端即时通讯技术盘点 demo
-- `canvas-demo` canvas 进度盘 demo
-- `handwrite-demo` 手写一些常见实现的 demo
-- `react-redux-demo` react redux demo
+0. `test` 一些零碎的知识点测试
+1. `build` 一些构建工具的测试
+2. `handwrite` 手写一些常见实现的 demo
+3. `angular-module` angular1.x 模块依赖
+4. `angular-todolist` angular1.x 所开发的单页面应用
+5. `pinterest-style` 3 种瀑布流布局
+6. `ast`
+7. `node`
+8. `typescript`
+9. `cilpboard` 粘贴板测试
+10. `generator`
+11. `corb` 跨域读取阻止
+12. `vue-router`
+13. `vuex`
+14. `vue-ssr`
+15. `hmr` HMR 源码解析
+16. `prerender-spa` 预渲染
+17. `microfe-single-spa` 微前端
+18. `koa` koa 的一个跨域请求
+19. `web-communication` Web 端即时通讯技术盘点
+20. `canvas` canvas 进度盘
+21. `react-redux`

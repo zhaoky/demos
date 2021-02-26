@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <button class="btn" id="d" data-clipboard-action="copy" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">123</button>
+  <textarea name="" id="a" cols="30" rows="10" onclick="a()">123123123123123</textarea>
+</body>
+<script src="https://cdn.bootcss.com/clipboard.js/2.0.4/clipboard.min.js"></script>
+<script>
+  var p = new Promise((r, t) => {
+    setTimeout(() => {
+      r('66666');
+    }, 3000);
+  });
+  function clipboard(text, event) {
+    const cb = new Clipboard('.a', {
+      text: () => text
+    });
+    cb.on('success', function (e) {
+      console.log(e);
+      cb.off('error');
+      cb.off('success');
+    });
+    cb.on('error', function (e) {
+      console.log(e);
+      cb.off('error');
+      cb.off('success');
+    });
+    cb.onClick(event);
+  }
+  clipboard('xxoo', 'click');
+  let domNode = document.getElementById('d');
+  domNode.addEventListener('click', event => clipboard('some text you need copy', event));
+
+  var clipboard = new ClipboardJS('.btn');
+
+  clipboard.on('success', function (e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+  });
+
+  clipboard.on('error', function (e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+  });
+  p.then(res => {
+    console.log(res);
+    var ele = document.getElementsByClassName('btn')[0];
+    ele.setAttribute('data-clipboard-text', res);
+    var event = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true
+    });
+
+    ele.dispatchEvent(event);
+    //   ele.removeEventListener('click',);
+  });
+  function a() {
+    console.log('a');
+    let domNode = document.getElementById('a');
+    domNode.select();
+    document.execCommand('copy');
+  }
+  setTimeout(() => {
+    console.log(1);
+    let domNode = document.getElementById('a');
+    domNode.select();
+    document.execCommand('copy');
+    var event = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true
+    });
+    domNode.dispatchEvent(event);
+  }, 3000);
+
+    //!!!!!!!!!!!!!!!!必须要用户点击触发才行，直接调用api或者模拟点击都不行。
+</script>
+
+</html>
