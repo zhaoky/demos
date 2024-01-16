@@ -1,0 +1,42 @@
+[
+  {
+    "text": "Micro Frontends",
+    "link": "/micro/",
+    "activeMatch": "/micro/"
+  },
+  {
+    "text": "Source Code",
+    "items": [
+      {
+        "text": "webpack 4",
+        "link": "/code/webpack4/372",
+        "activeMatch": "/code/webpack4/"
+      },
+      {
+        "text": "vue 2",
+        "link": "/code/vue2/392",
+        "activeMatch": "/code/vue2/"
+      }
+    ]
+  },
+  {
+    "text": "JavaScript",
+    "link": "/js/402",
+    "activeMatch": "/js/"
+  },
+  {
+    "text": "CSS",
+    "link": "/css/415",
+    "activeMatch": "/css/"
+  },
+  {
+    "text": "MISC",
+    "link": "/misc/414",
+    "activeMatch": "/misc/"
+  },
+  {
+    "text": "Hexo",
+    "link": "/hexo/408",
+    "activeMatch": "/hexo/"
+  }
+]
