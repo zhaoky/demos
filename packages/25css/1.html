@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>纯 css 实现同行不等高块状元素自适应内容动态保持高度一致</title>
+  </head>
+  <body>
+    <style>
+      *{
+        /* all:initial; */
+        /* all:unset; */
+      }
+      /* body{
+        line-height: 80px;
+        /* font-size: 30px; */
+      } */
+
+      .a,#d {
+        position: relative;
+
+      }
+      #p {
+        color: yellow !important;
+      }
+      .p:nth-of-type(){
+
+      }
+      .p::after{
+        position: absolute;
+        bottom: 10px;
+        color: red !important;
+      }
+      a{
+        /* color: inherit; */
+        /* color:initial; */
+
+      }
+      .d{
+        /* line-height: 24px; */
+        line-height: initial;
+        font-size: unset;
+      }
+      ul{
+        list-style: unset;
+      }
+      .e{
+        line-height:initial;
+        color:red;
+      }
+      h1{
+        font-size: initial;
+        font-size: unset;
+        /* font-size:revert; */
+      }
+      .ea{
+        color: revert;
+      }
+      .input{
+
+      }
+      .label{
+        font-size: 12px;
+      }
+      .label{
+        font-size: revert;
+      }
+      .i{
+        font-size: 60px;
+        color:red;
+      }
+      h1{
+        float: left;
+        border: 1px solid #000;
+      }
+    </style>
+    <main>
+      <div class="a">
+        第一个块
+        <div class="p" id="p">下边</div>
+      </div>
+      <div class="b">第二个块第二个块第二个块第二个块第二个块第二个块第二个块第二个块第二个块第二个块</div>
+      <div>第三个块</div>
+      <div>
+        <a href="#">123</a>
+      </div>
+      <div class="i">
+        <label for="" class="label">账号：</label>
+        <input type="text" class="input" />
+      </div>
+      <div class="d">
+        333
+        <ul>
+          <li>1</li>
+          <li>2</li>
+        </ul>
+      </div>
+      <div class="e">
+        文字
+        <a href="" class="ea">子文字</a>
+      </div>
+      <h1>123</h1>
+      <div>234</div>
+      <div>456</div>
+      <div>789</div>
+      <button id="btn">btn</button>
+    </main>
+  </body>
+  <script>
+    // 获取一个按钮元素
+    var button = document.getElementById('btn');
+
+    button.addEventListener('click', () => {
+      console.log('btn点击了');
+    });
+
+    setTimeout(() => {
+      // 创建一个 click 事件
+      var clickEvent = new Event('click', {
+        bubbles: true,
+        cancelable: true,
+      });
+      // 触发按钮的 click 事件
+      button.dispatchEvent(clickEvent);
+    }, 3000);
+  </script>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>qrcode</title>
+    <style>
+      .area {
+        height: 200px;
+        border: 1px dashed skyblue;
+        background-color: #fff;
+        display: grid;
+        place-items: center;
+        margin-top: 20px;
+      }
+      .area:focus {
+        border-style: solid;
+      }
+      .area:empty::before {
+        content: '或粘贴图片到这里';
+        color: gray;
+      }
+      .button {
+        margin: 1rem auto;
+        width: 160px;
+        height: 40px;
+        font-size: 112.5%;
+        background-color: #eb4646;
+        color: #fff;
+        border: 0;
+        border-radius: 0.25rem;
+        margin-top: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input id="file" class="file" type="file" accept="image/png" />
+      <div id="area" class="area" tabindex="-1"></div>
+    </div>
+    <p align="center">
+      <button id="button" class="button">识别</button>
+    </p>
+
+    <p id="result" align="center"></p>
+
+    <p align="center">
+      方便大家复制的示意图：<br /><img
+        src="./qrcode.png"
+        style="margin-top: 10px"
+      />
+    </p>
+
+    <script>
+      var reader = new FileReader()
+      reader.onload = function (event) {
+        area.innerHTML = '<img src="' + event.target.result + '">'
+      }
+      document.addEventListener('paste', function (event) {
+        var items = event.clipboardData && event.clipboardData.items
+        var file = null
+        if (items && items.length) {
+          // 检索剪切板items
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+              file = items[i].getAsFile()
+              break
+            }
+          }
+        }
+        // 此时file就是剪切板中的图片文件
+        if (file) {
+          reader.readAsDataURL(file)
+        }
+      })
+
+      file.addEventListener('change', function (event) {
+        const file = event.target.files && event.target.files[0]
+        if (file) {
+          reader.readAsDataURL(file)
+        }
+      })
+
+      button.addEventListener('click', function () {
+        if ('BarcodeDetector' in window) {
+          // 创建检测器
+          const barcodeDetector = new BarcodeDetector({
+            formats: ['qr_code']
+          })
+
+          const eleImg = document.querySelector('#area img')
+          if (eleImg) {
+            barcodeDetector
+              .detect(eleImg)
+              .then(barcodes => {
+                console.log('barcodes', barcodes)
+                barcodes.forEach(barcode => {
+                  result.innerHTML = `<span class="success">解析成功，结果是：</span>${barcode.rawValue}`
+                })
+              })
+              .catch(err => {
+                result.innerHTML = `<span class="error">解析出错：${err}</span>`
+              })
+          } else {
+            result.innerHTML = `<span class="error">请先粘贴二维码图片</span>`
+          }
+        } else {
+          result.innerHTML = `<span class="error">当前浏览器不支持二维码识别</span>`
+        }
+      })
+    </script>
+  </body>
+</html>
+

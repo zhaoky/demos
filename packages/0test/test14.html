@@ -14,10 +14,10 @@
     </style>
   </head>
   <body>
-    <!-- <div id="a">
-      a -->
+    <div id="a">
+      aaaaaa
     <a id="b" href="https://www.baidu.com">b</a>
-    <!-- </div> -->
+    </div>
   </body>
   <script>
     var b = document.getElementById('b');
@@ -32,16 +32,29 @@
     //     passive: true
     //   }
     // );
-    // a.addEventListener(
-    //   'touchstart',
-    //   function(e) {
-    //     console.log('666aaa', e);
-    //     e.preventDefault();
-    //   },
-    //   {
-    //     passive: true
-    //   }
-    // );
+    a.addEventListener(
+      'touchstart',
+      function(e) {
+        console.log('666aaa', e);
+        e.preventDefault();
+      },
+      {
+        // passive: true
+         capture:false
+      }
+    );
+    document.addEventListener(
+      'touchstart',
+      function(e) {
+        console.log('document', e);
+        e.preventDefault();
+      },
+      {
+        passive: false,
+        // capture:true
+      }
+    );
+    //从 `Chrome 56` 开始，如果我们给 `document` 绑定 `touchmove` 或者 `touchstart` 事件的监听器，这个 `passive` 是会被默认设置为`true` 以提高性能[查阅](https://www.chromestatus.com/feature/5093566007214080)
     b.addEventListener(
       'click',
       function(e) {

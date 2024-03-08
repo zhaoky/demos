@@ -1,0 +1,30 @@
+<style>
+    #box1 {
+      width: 100px;
+      height: 100px;
+      background-color: cadetblue;
+      margin: 10px;
+    }
+    #box2 {
+      width: 100px;
+      height: 100px;
+      background-color: burlywood;
+      margin: 10px;
+    }
+    .bfc {
+      overflow: hidden;
+      /* 以下方式均可以，不限于以下方式 */
+      /* position: absolute; */
+      /* position: fixed; */
+      /* float: left; */
+      /* overflow: auto; */
+      /* display: inline-block; */
+    }
+  </style>
+  
+  <div id="parent">
+    <div id="box1"></div>
+    <!-- <div class="bfc"> -->
+    <div id="box2"></div>
+    <!-- </div> -->
+  </div>
